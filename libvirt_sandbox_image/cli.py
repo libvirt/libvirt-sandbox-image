@@ -34,7 +34,7 @@ import subprocess
 import random
 import string
 
-from libvirt_sandbox.image import template
+from libvirt_sandbox_image import template
 
 if os.geteuid() == 0:
     default_template_dir = "/var/lib/libvirt/templates"

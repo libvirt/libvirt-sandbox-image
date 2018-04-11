@@ -23,7 +23,7 @@ import os.path
 import subprocess
 
 from . import base
-from libvirt_sandbox.image.template import Template
+from libvirt_sandbox_image.template import Template
 
 
 class VirtBuilderSource(base.Source):

@@ -32,7 +32,7 @@ import urllib.request
 import hashlib
 from abc import ABCMeta, abstractmethod
 import copy
-from libvirt_sandbox.image.template import Template
+from libvirt_sandbox_image.template import Template
 
 from . import base
 

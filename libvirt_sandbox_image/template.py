@@ -66,7 +66,7 @@ class Template(object):
             sourcename = "".join([i.capitalize() for i in p.split(source)])
 
             mod = importlib.import_module(
-                "libvirt_sandbox.image.sources." + sourcemod)
+                "libvirt_sandbox_image.sources." + sourcemod)
             classname = sourcename + "Source"
             classimpl = getattr(mod, classname)
             return classimpl()
