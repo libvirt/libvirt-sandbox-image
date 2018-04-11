@@ -1,0 +1,34 @@
+
+Summary:       A program for running container or VM images in sandboxes
+Name:          python3-libvirt-sandbox-image
+Version:       @PY_VERSION@
+Release:       1%{?dist}
+Source0:       https://pypi.python.org/packages/source/l/%{name}/libvirt_sandbox_image-%{version}.tar.gz
+URL:           https://pypi.python.org/pypi/libvirt-sandbox-image
+License:       LGPLv2+
+Group:         Development/Libraries
+
+BuildArch:     noarch
+BuildRequires: python3-devel
+
+%description
+This package provides a program that is able to run container or VM
+images in the sandbox environment provided by libvirt-sandbox.
+Currently docker and virt-builder images are supported.
+
+%prep
+%setup -q -n libvirt_sandbox_image-%{version}
+
+%build
+%{__python3} setup.py build
+
+%install
+%{__python3} setup.py install --skip-build --root=%{buildroot}
+
+%files
+%doc README LICENSE
+%{_bindir}/virt-sandbox-image
+%{python3_sitelib}/libvirt_sandbox_image/
+%{python3_sitelib}/libvirt_sandbox_image-%{version}-py3.*.egg-info
+
+%changelog

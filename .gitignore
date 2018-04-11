@@ -1,0 +1,9 @@
+*~
+\#*
+.#*
+*.spec
+dist/
+build/
+AUTHORS
+ChangeLog
+*egg-info/

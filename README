@@ -1,0 +1,27 @@
+   Libvirt Sandbox Image
+   =====================
+
+This package provides a program that is able to run container or VM
+images in the sandbox environment provided by libvirt-sandbox.
+Currently docker and virt-builder images are supported.
+
+License
+=======
+
+This package is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+Development
+===========
+
+The master repository for the codebase is
+
+   https://libvirt.org/git/?p=libvirt-sandbox.git;a=summary
+
+Send patches via email to the libvirt development mailing list
+
+   https://libvirt.org/contact.html
+
+-- End
