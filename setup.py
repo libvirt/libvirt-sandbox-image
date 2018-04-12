@@ -15,8 +15,8 @@ class my_build(build):
     description = "build everything needed to install"
 
     def gen_rpm_spec(self):
-        f1 = open('python3-libvirt-sandbox-image.spec.in', 'r')
-        f2 = open('python3-libvirt-sandbox-image.spec', 'w')
+        f1 = open('libvirt-sandbox-image.spec.in', 'r')
+        f2 = open('libvirt-sandbox-image.spec', 'w')
         for line in f1:
             f2.write(line
                      .replace('@PY_VERSION@', self.distribution.get_version()))
@@ -70,7 +70,7 @@ class my_build(build):
                 build.run(self)
 
             except:
-                files = ["python3-libvirt-sandbox-image.spec",
+                files = ["libvirt-sandbox-image.spec",
                          "AUTHORS",
                          "ChangeLog"]
                 for f in files:
@@ -80,7 +80,7 @@ class my_build(build):
             build.run(self)
 
 setup(
-    name="libvirt_sandbox_image",
+    name="libvirt-sandbox-image",
     version="1.0",
     description="A program for running container or VM images in sandboxes",
     long_description=""

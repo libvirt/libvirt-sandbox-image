@@ -9,6 +9,6 @@ include scripts/virt-sandbox-image
 include libvirt_sandbox_image/*.py
 include libvirt_sandbox_image/source/*.py
 include autobuild.sh
-include python3-libvirt-sandbox-image.spec
-include python3-libvirt-sandbox-image.spec.in
+include libvirt-sandbox-image.spec
+include libvirt-sandbox-image.spec.in
 global-exclude *.pyc
