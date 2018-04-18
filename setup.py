@@ -4,6 +4,7 @@ from setuptools import Command
 from distutils.command.build import build
 from distutils.util import get_platform
 
+import glob
 import sys
 import os
 import re
@@ -38,6 +39,26 @@ class my_build(build):
         f1.close()
         f2.close()
 
+    def gen_man_pages(self):
+        for path in glob.glob("man/*.pod"):
+            base = os.path.basename(path)
+            appname = os.path.splitext(base)[0]
+            newpath = os.path.join(os.path.dirname(path),
+                                   appname + ".1")
+
+            print("Generating %s" % newpath)
+            ret = os.system('pod2man '
+                            '--center "Virtualization Support" '
+                            '--release %s --name %s '
+                            '< %s > %s' % (self.distribution.get_version(),
+                                           appname.upper(),
+                                           path, newpath))
+            if ret != 0:
+                raise RuntimeError("Generating '%s' failed." % newpath)
+
+        if os.system("grep -IRq 'Hey!' man/") == 0:
+            raise RuntimeError("man pages have errors in them! "
+                               "(grep for 'Hey!')")
 
     def gen_changelog(self):
         f1 = os.popen("git log '--pretty=format:%H:%ct %an  <%ae>%n%n%s%n%b%n'")
@@ -66,7 +87,7 @@ class my_build(build):
                 self.gen_rpm_spec()
                 self.gen_authors()
                 self.gen_changelog()
-
+                self.gen_man_pages()
                 build.run(self)
 
             except:
@@ -76,6 +97,7 @@ class my_build(build):
                 for f in files:
                     if os.path.exists(f):
                         os.unlink(f)
+                raise
         else:
             build.run(self)
 
@@ -97,6 +119,15 @@ setup(
     packages=[
         "libvirt_sandbox_image",
         "libvirt_sandbox_image/sources"
+    ],
+    data_files=[
+        ("share/man/man1", [
+            "man/virt-sandbox-image.1",
+            "man/virt-sandbox-image-prepare.1",
+            "man/virt-sandbox-image-run.1",
+            "man/virt-sandbox-image-list.1",
+            "man/virt-sandbox-image-purge.1",
+        ]),
     ],
     install_requires=[],
     cmdclass = {

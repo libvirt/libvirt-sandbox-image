@@ -28,6 +28,7 @@ Currently docker and virt-builder images are supported.
 %files
 %doc README LICENSE
 %{_bindir}/virt-sandbox-image
+%{_mandir}/man1/virt-sandbox-image*1*
 %{python3_sitelib}/libvirt_sandbox_image/
 %{python3_sitelib}/libvirt_sandbox_image-%{version}-py3.*.egg-info
 

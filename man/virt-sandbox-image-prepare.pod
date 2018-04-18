@@ -1,0 +1,100 @@
+=encoding utf8
+
+=head1 NAME
+
+virt-sandbox-image prepare - Download and cache an image template
+
+=head1 SYNOPSIS
+
+  virt-sandbox-image prepare [-h] [-c CONNECT] [-t TEMPLATE_DIR] template
+
+=head1 DESCRIPTION
+
+B<virt-sandbox-image> is used to manage and execute application container
+images in secure sandboxes. These applications will be launched via l
+ibvirt and run within a virtualization technology such as LinuX Containers
+(LXC), or QEMU/KVM. The containers / virtual machines will be secured by
+SELinux and resource separated using cgroups.
+
+The B<prepare> command is used to proactively download and cache an image
+template. This ensures that when the B<run> command is used later, it will
+be able to launch the sandbox immediately. Use of this command is optional,
+ since the B<run> command will automatically download image templates if
+not already present in the cache.
+
+The cache will contain both the downloaded image in its original native
+format, and the same content extracted into qcow2 images formatted with
+an ext4 filesystem.
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-h>, B<--help>
+
+Display help message
+
+=item B<-c URI>, B<--connect URI>
+
+The connection URI for the hypervisor. The following URIs are currently
+supported
+
+ - lxc:///        (if running as root)
+ - qemu:///system (if running as root)
+ - qemu:///session (if running as non-root)
+
+It is not permitted to use non-local URIs (ie URIs with a hostname)
+at this time.
+
+=item B<-t TEMPLATE_DIR>
+
+Override the default template directory which is usually
+C</var/lib/libvirt/templates> (root) or C<$HOME/.local/share/libvirt/templates>.
+
+=item B<template>
+
+The URI identifying the template to download and prepare.
+
+=back
+
+=head1 EXAMPLE
+
+Download and prepare a Docker Ubuntu 15.04 template for use with KVM
+
+ # virt-sandbox-image prepare -c qemu:///session docker:///ubuntu?tag=15.04
+
+Download and prepare a virt-builder Fedora 24 template for use with LXC
+
+ # virt-sandbox-image prepare -c lxc:/// virt-builder:///fedora-24
+
+=head1 SEE ALSO
+
+C<virt-sandbox(1)>,
+C<virt-sandbox-image(1)>, C<virt-sandbox-image-run(1)>,
+C<virt-sandbox-image-purge(1)>, C<virt-sandbox-image-list(1)>
+
+=head1 FILES
+
+Pristine downloaded templates will be stored in subdirectories of
+C</var/lib/libvirt/templates> (root) or C<$HOME/.local/share/libvirt/templates>
+(non-root) by default.
+
+Overlay images created when running an instance of the template will
+be stored in C</var/lib/libvirt/images> (root) or C<$HOME/.local/share/libvirt/images>
+(non-root) by default.
+
+=head1 AUTHORS
+
+Daniel P. Berrangé <dan@berrange.com>, Eren Yagdiran <erenyagdiran@gmail.com>
+and Cédric Bosdonnat <cbosdonnat@suse.com>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2011-2018 Red Hat, Inc.
+
+=head1 LICENSE
+
+virt-sandbox is distributed under the terms of the GNU LGPL v2+.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE

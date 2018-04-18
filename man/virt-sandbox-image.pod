@@ -1,0 +1,136 @@
+=encoding utf8
+
+=head1 NAME
+
+virt-sandbox-image - Sandbox container image tool
+
+=head1 SYNOPSIS
+
+  virt-sandbox-image COMMAND [ARGS...]
+
+Valid B<COMMAND> values are:
+
+    prepare             Download and cache an image template
+
+    run                 Launch a sandbox from an image template
+
+    delete              Delete a cached image template
+
+    list                List cached image templates
+
+=head1 DESCRIPTION
+
+B<virt-sandbox-image> is used to launch sandboxes from pre-built container
+image templates. It is able to download image templates in a number of
+formats from online image registries, including those built for Docker
+and virt-builder. The images can be run with either QEMU (KVM) or LXC
+virtualization drivers.
+
+Refer to the command specific manual pages for information about usage
+of each command.
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-h>, B<--help>
+
+Display help message
+
+=item B<-c URI>, B<--connect URI>
+
+The connection URI for the hypervisor. The following URIs are currently
+supported
+
+ - lxc:///        (if running as root)
+ - qemu:///system (if running as root)
+ - qemu:///session (if running as non-root)
+
+It is not permitted to use other virtualization drivers or non-local
+URIs (ie URIs with a hostname) at this time.
+
+=back
+
+=head1 TEMPLATE URIs
+
+virt-sandbox-image is intended to be extensible to consume any commonly
+distributed container image format. To enable different image format
+to be reliably located, a URI syntax is used to identify templates
+with the general syntax
+
+  B<format+protocol://server:port/template-name?parameters>
+
+Refer to the text that follows for detailed information on URI
+syntax for each different template format.
+
+=head1 DOCKER TEMPLATE URIs
+
+When refering to docker templates it is possible to leave out the
+protocol, server port, and parameters, to just give the template
+name on its own. For example
+
+B<docker:///ubuntu>
+
+Will refer to the latest Ubuntu image available on the default
+Docker image registry.
+
+If an alternative Ubuntu image is desired, it can be requested by
+setting the tag parameter. For example to get Ubuntu 15.04
+
+B<docker:///ubuntu?tag=15.04>
+
+Support for downloading from alternative docker registries is
+possible by specifying the protocol, server and (optionally)
+port. For example, the bare B<docker:///ubuntu> URL above,
+when fully specified would look like:
+
+B<docker+https://index.docker.io:443/ubuntu?tag=latest>
+
+The driver for Docker images does not currently support the full
+range of configuration options that are possible in docker image
+metadata. It will, however, honour all command line arguments
+and environment variables specified.
+
+=head1 VIRT BUILDER TEMPLATE URIs
+
+When refering to virt-builder templates the protocol, server and
+port should not currently be used. Only the template name should
+be given in the URI. For example
+
+B<virt-builder:///fedora-20>
+
+The virt-builder template format does not provide any metadata
+about default commands to run, so the user must fully specify
+what they wish to launch when running these images.
+
+=head1 SEE ALSO
+
+C<virt-sandbox(1)>,
+C<virt-sandbox-image-prepare(1)>, C<virt-sandbox-image-run(1)>,
+C<virt-sandbox-image-purge(1)>, C<virt-sandbox-image-list(1)>
+
+=head1 FILES
+
+Pristine downloaded templates will be stored in subdirectories of
+C</var/lib/libvirt/templates> (root) or C<$HOME/.local/share/libvirt/templates>
+(non-root) by default.
+
+Overlay images created when running an instance of the template will
+be stored in C</var/lib/libvirt/images> (root) or C<$HOME/.local/share/libvirt/images>
+(non-root) by default.
+
+=head1 AUTHORS
+
+Daniel P. Berrangé <dan@berrange.com>, Eren Yagdiran <erenyagdiran@gmail.com>
+and Cédric Bosdonnat <cbosdonnat@suse.com>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2011-2018 Red Hat, Inc.
+
+=head1 LICENSE
+
+virt-sandbox is distributed under the terms of the GNU LGPL v2+.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE

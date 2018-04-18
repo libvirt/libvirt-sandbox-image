@@ -1,0 +1,165 @@
+=encoding utf8
+
+=head1 NAME
+
+virt-sandbox-image run - Launch a sandbox from an image template
+
+=head1 SYNOPSIS
+
+  virt-sandbox-image run [-h] [-n NAME] [-c CONNECT] [-t TEMPLATE_DIR]
+                         [-I IMAGE_DIR] [-N NETWORK] [-e ENV]
+                         TEMPLATE [--] [COMMAND [ARGS...]]
+
+=head1 DESCRIPTION
+
+B<virt-sandbox-image> is used to manage and execute application container
+images in secure sandboxes. These applications will be launched via l
+ibvirt and run within a virtualization technology such as LinuX Containers
+(LXC), or QEMU/KVM. The containers / virtual machines will be secured by
+SELinux and resource separated using cgroups.
+
+The B<run> command will launch a sandbox populated with content from the
+image name B<TEMPLATE>.
+
+If B<COMMAND> is provided it determines the binary to run inside the sandbox.
+If omitted, then the default binary for that image is run. Not all images
+provide a default binary to run, and thus will launch to launch if no B<COMMAND>
+is given. It is recommended to insert B<--> before B<COMMAND> to ensure that
+any arguments for B<COMMAND> are not mistakenly interpreted as arguments for
+B<virt-sandbox-image>
+
+If the requested B<TEMPLATE> is not already present on the local system, it
+will be automatically downloaded and cached, which may delay startup of the
+sandbox. To avoid these delays the cache can be populated using the B<prepare>
+command ahead of time, while unwanted cached content can be deleted using the
+B<purge> command.
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-h>, B<--help>
+
+Display help message
+
+=item B<-c URI>, B<--run URI>
+
+The connection URI for the hypervisor (lxc:///, qemu:///system or
+qemu:///session only).
+
+=item B<-n NAME>, B<--name=NAME>
+
+Set the unique name for the sandbox. This defaults to the base
+name of the template image used, with a random identifier appended.
+This is used as the name of the libvirt virtual machine or container.
+
+=item B<-t TEMPLATE_DIR>, B<--template-dir TEMPLATE_DIR>
+
+Override the default location of the directory holding the image
+templates.
+
+=item B<-I IMAGE_DIR>, B<--image-dir IMAGE_DIR>
+
+Override the default location of the directory holding the instantiated
+images.
+
+=item B<-N NETWORK>, B<--network NETWORK>
+
+Add a network interface to the sandbox. NETWORK-OPTIONS is a set of
+key=val pairs, separated by commas. The following options are valid
+
+=over 4
+
+=item dhcp
+
+Configure the network interface using dhcp. This key takes no value.
+No other keys may be specified. eg
+
+  -N dhcp,source=default
+  --network dhcp,source=lan
+
+where 'source' is the name of any libvirt virtual network.
+
+=item source=NETWORK
+
+Set the name of the network to connect the interface to. C<NETWORK>
+is the name of any libvirt virtual network. See also B<virsh net-list>
+
+=item mac=NN:NN:NN:NN:NN:NN
+
+Set the MAC address of the network interface, where each NN is a pair
+of hex digits.
+
+=item address=IP-ADDRESS/PREFIX%BROADCAST
+
+Configure the network interface with the static IPv4 or IPv6 address
+B<IP-ADDRESS>. The B<PREFIX> value is the length of the network
+prefix in B<IP-ADDRESS>. The optional B<BROADCAST> parameter
+specifies the broadcast address. Some examples
+
+  address=192.168.122.1/24
+  address=192.168.122.1/24%192.168.122.255
+  address=2001:212::204:2/64
+
+=item route=IP-NETWORK/PREFIX%GATEWAY
+
+Configure the network interface with the static IPv4 or IPv6 route
+B<IP-NETWORK>. The B<PREFIX> value is the length of the network
+prefix in B<IP-NETWORK>. The B<GATEWAY> parameter specifies the
+address of the gateway for the route. Some examples
+
+  route=192.168.122.255/24%192.168.1.1
+
+=back
+
+Can be repeated multiple times to provide multiple virtual interfaces.
+
+=item B<-e KEY=VAL>, B<--env KEY=VAL>
+
+Set the environment variable B<KEY> to the value B<VAL> when running
+the initial application defined by the image.
+
+=back
+
+=head1 EXAMPLE
+
+Run the Ubuntu image, launching the default binary designated by the
+image.
+
+ # virt-sandbox-image run docker:///ubuntu
+
+Run the Fedora image, launching the '/bin/ls' binary
+
+ # virt-sandbox-image run docker:///fedora -- /bin/ls -l /
+
+=head1 SEE ALSO
+
+C<virt-sandbox(1)>,
+C<virt-sandbox-image(1)>, C<virt-sandbox-image-prepare(1)>,
+C<virt-sandbox-image-purge(1)>, C<virt-sandbox-image-list(1)>
+
+=head1 FILES
+
+Pristine downloaded templates will be stored in subdirectories of
+C</var/lib/libvirt/templates> (root) or C<$HOME/.local/share/libvirt/templates>
+(non-root) by default.
+
+Overlay images created when running an instance of the template will
+be stored in C</var/lib/libvirt/images> (root) or C<$HOME/.local/share/libvirt/images>
+(non-root) by default.
+
+=head1 AUTHORS
+
+Daniel P. Berrangé <dan@berrange.com>, Eren Yagdiran <erenyagdiran@gmail.com>
+and Cédric Bosdonnat <cbosdonnat@suse.com>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2011-2018 Red Hat, Inc.
+
+=head1 LICENSE
+
+virt-sandbox is distributed under the terms of the GNU LGPL v2+.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE

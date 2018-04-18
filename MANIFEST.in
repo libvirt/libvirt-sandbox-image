@@ -11,4 +11,6 @@ include libvirt_sandbox_image/source/*.py
 include autobuild.sh
 include libvirt-sandbox-image.spec
 include libvirt-sandbox-image.spec.in
+include man/*1
+include man/*pod
 global-exclude *.pyc
