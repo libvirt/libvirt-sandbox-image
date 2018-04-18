@@ -167,13 +167,11 @@ def requires_connect(parser):
                         help=_("Connect string for libvirt"))
 
 def requires_template_dir(parser):
-    global default_template_dir
     parser.add_argument("-t", "--template-dir",
                         default=default_template_dir,
                         help=_("Template directory for saving templates"))
 
 def requires_image_dir(parser):
-    global default_image_dir
     parser.add_argument("-I", "--image-dir",
                         default=default_image_dir,
                         help=_("Image directory for saving images"))
