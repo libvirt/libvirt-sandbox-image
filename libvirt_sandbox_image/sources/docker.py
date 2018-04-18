@@ -20,6 +20,7 @@
 # Author: Eren Yagdiran <erenyagdiran@gmail.com>
 #
 
+import base64
 import sys
 import json
 import os
