@@ -1,11 +1,8 @@
 
 from setuptools import setup
-from setuptools import Command
 from distutils.command.build import build
-from distutils.util import get_platform
 
 import glob
-import sys
 import os
 import re
 import time

@@ -23,12 +23,9 @@
 
 import argparse
 import gettext
-import hashlib
-import json
 import os
 import os.path
 import re
-import shutil
 import sys
 import subprocess
 import random

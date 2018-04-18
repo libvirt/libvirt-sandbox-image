@@ -22,7 +22,6 @@
 
 import sys
 import json
-import traceback
 import os
 import subprocess
 import shutil
