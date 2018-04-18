@@ -50,8 +50,8 @@ try:
                     localedir="/usr/share/locale",
                     codeset = 'utf-8')
 except IOError:
-    import __builtin__
-    __builtin__.__dict__['_'] = unicode
+    import builtins
+    builtins.__dict__['_'] = str
 
 
 def debug(msg):
