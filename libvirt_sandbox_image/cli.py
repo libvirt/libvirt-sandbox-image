@@ -48,7 +48,7 @@ gettext.textdomain("libvirt-sandbox")
 try:
     gettext.install("libvirt-sandbox",
                     localedir="/usr/share/locale",
-                    codeset = 'utf-8')
+                    codeset='utf-8')
 except IOError:
     import builtins
     builtins.__dict__['_'] = str
@@ -109,7 +109,7 @@ def run(args):
     if args.connect is not None:
         cmd.append("-c")
         cmd.append(args.connect)
-    params = ['-m','host-image:/=%s,format=qcow2' % diskfile]
+    params = ['-m', 'host-image:/=%s,format=qcow2' % diskfile]
 
     networkArgs = args.network
     if networkArgs is not None:
@@ -144,40 +144,40 @@ def list_cached(args):
             tmpls.extend(template.Template.get_all(source,
                                                    "%s/%s" % (args.template_dir, source)))
     for tmpl in tmpls:
-        print (tmpl)
+        print(tmpl)
 
 def requires_template(parser):
     parser.add_argument("template",
                         help=_("URI of the template"))
 
 def requires_name(parser):
-    parser.add_argument("-n","--name",
+    parser.add_argument("-n", "--name",
                         help=_("Name of the running sandbox"))
 
 def requires_debug(parser):
-    parser.add_argument("-d","--debug",
+    parser.add_argument("-d", "--debug",
                         default=False, action="store_true",
                         help=_("Run in debug mode"))
 
 def check_connect(connectstr):
-    supportedDrivers = ['lxc:///','qemu:///session','qemu:///system']
+    supportedDrivers = ['lxc:///', 'qemu:///session', 'qemu:///system']
     if not connectstr in supportedDrivers:
         raise ValueError("URI '%s' is not supported by virt-sandbox-image" % connectstr)
     return True
 
 def requires_connect(parser):
-    parser.add_argument("-c","--connect",
+    parser.add_argument("-c", "--connect",
                         help=_("Connect string for libvirt"))
 
 def requires_template_dir(parser):
     global default_template_dir
-    parser.add_argument("-t","--template-dir",
+    parser.add_argument("-t", "--template-dir",
                         default=default_template_dir,
                         help=_("Template directory for saving templates"))
 
 def requires_image_dir(parser):
     global default_image_dir
-    parser.add_argument("-I","--image-dir",
+    parser.add_argument("-I", "--image-dir",
                         default=default_image_dir,
                         help=_("Image directory for saving images"))
 
@@ -222,9 +222,9 @@ def gen_run_args(subparser):
     parser.add_argument("args",
                         nargs=argparse.REMAINDER,
                         help=_("command arguments to run"))
-    parser.add_argument("-N","--network",
+    parser.add_argument("-N", "--network",
                         help=_("Network params for running template"))
-    parser.add_argument("-e","--env",action="append",
+    parser.add_argument("-e", "--env", action="append",
                         help=_("Environment params for running template"))
 
     parser.set_defaults(func=run)
@@ -234,7 +234,7 @@ def gen_list_args(subparser):
                                 _("List locally cached images"))
     requires_template_dir(parser)
 
-    parser.add_argument("-s","--source",
+    parser.add_argument("-s", "--source",
                         help=_("Name of the template source"))
 
     parser.set_defaults(func=list_cached)
@@ -275,5 +275,5 @@ def main():
             sys.stderr.flush()
             sys.exit(1)
         except Exception as e:
-            print (e)
+            print(e)
             sys.exit(1)

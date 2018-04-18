@@ -93,7 +93,7 @@ class VirtBuilderSource(base.Source):
     def get_command(self, template, templatedir, userargs):
         return userargs
 
-    def get_disk(self,template, templatedir, imagedir, sandboxname):
+    def get_disk(self, template, templatedir, imagedir, sandboxname):
         diskfile = "%s/%s.qcow2" % (templatedir, self._get_template_name(template))
         tempfile = imagedir + "/" + sandboxname + ".qcow2"
         if not os.path.exists(imagedir):
@@ -105,5 +105,5 @@ class VirtBuilderSource(base.Source):
         subprocess.check_call(cmd)
         return tempfile
 
-    def get_env(self,template, templatedir):
+    def get_env(self, template, templatedir):
         return []

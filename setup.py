@@ -127,10 +127,10 @@ setup(
         ]),
     ],
     install_requires=[],
-    cmdclass = {
+    cmdclass={
         'build': my_build,
     },
-    classifiers = [
+    classifiers=[
         "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

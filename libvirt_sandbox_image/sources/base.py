@@ -127,13 +127,13 @@ class Source():
 
     # Utility functions to share between the sources.
 
-    def format_disk(self,disk,format,connect):
+    def format_disk(self, disk, format, connect):
         cmd = ['virt-sandbox']
         if connect is not None:
             cmd.append("-c")
             cmd.append(connect)
         cmd.append("-p")
-        params = ['--disk=file:disk_image=%s,format=%s' %(disk,format),
+        params = ['--disk=file:disk_image=%s,format=%s' %(disk, format),
                   '/sbin/mkfs.ext3',
                   '/dev/disk/by-tag/disk_image']
         cmd = cmd + params

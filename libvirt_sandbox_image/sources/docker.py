@@ -533,7 +533,7 @@ class DockerSource(base.Source):
         parentImage = None
         for imagetagid in imagelist:
             templateImage = templatedir + "/" + imagetagid + "/template.qcow2"
-            cmd = ["qemu-img","create","-f","qcow2"]
+            cmd = ["qemu-img", "create", "-f", "qcow2"]
             if parentImage is not None:
                 cmd.append("-o")
                 cmd.append("backing_fmt=qcow2,backing_file=%s" % parentImage)
@@ -657,7 +657,7 @@ class DockerSource(base.Source):
         tempfile = imagedir + "/" + sandboxname.split('/')[-1] + ".qcow2"
         if not os.path.exists(imagedir):
             os.makedirs(imagedir)
-        cmd = ["qemu-img","create","-q","-f","qcow2"]
+        cmd = ["qemu-img", "create", "-q", "-f", "qcow2"]
         cmd.append("-o")
         cmd.append("backing_fmt=qcow2,backing_file=%s" % diskfile)
         cmd.append(tempfile)

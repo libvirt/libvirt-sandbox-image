@@ -71,7 +71,7 @@ class Template(object):
             classimpl = getattr(mod, classname)
             return classimpl()
         except Exception as e:
-            print (e)
+            print(e)
             raise Exception("Invalid source: '%s'" % source)
 
     def get_source_impl(self):
@@ -120,7 +120,7 @@ class Template(object):
         if o.query is not None and o.query != "":
             for param in o.query.split("&"):
                 (key, val) = param.split("=")
-                query[key] =  val
+                query[key] = val
         return klass(source, protocol,
                      o.hostname, o.port,
                      o.username, o.password,
