@@ -1,11 +1,11 @@
 
-from setuptools import setup
-from distutils.command.build import build
-
 import glob
 import os
 import re
 import time
+
+from distutils.command.build import build
+from setuptools import setup
 
 class my_build(build):
     user_options = build.user_options
