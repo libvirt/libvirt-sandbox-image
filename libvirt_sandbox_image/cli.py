@@ -40,9 +40,6 @@ else:
     default_template_dir = os.environ['HOME'] + "/.local/share/libvirt/templates"
     default_image_dir = os.environ['HOME'] + "/.local/share/libvirt/images"
 
-debug = False
-verbose = False
-
 gettext.bindtextdomain("libvirt-sandbox", "/usr/share/locale")
 gettext.textdomain("libvirt-sandbox")
 try:
