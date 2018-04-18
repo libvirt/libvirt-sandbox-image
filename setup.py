@@ -128,7 +128,7 @@ setup(
     ],
     install_requires=[],
     cmdclass = {
-          'build': my_build,
+        'build': my_build,
     },
     classifiers = [
         "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",

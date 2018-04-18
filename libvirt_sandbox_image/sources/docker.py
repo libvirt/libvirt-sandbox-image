@@ -47,9 +47,9 @@ class DockerConfParser():
     def getEnvs(self):
         lst = self.json_data['config']['Env']
         if lst is not None and isinstance(lst,list):
-          return lst
+            return lst
         else:
-          return []
+            return []
 
 class DockerImage():
 
