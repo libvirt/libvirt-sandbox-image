@@ -1,4 +1,4 @@
 [gitpublishprofile "default"]
 base = master
 to = libvir-list@redhat.com
-prefix = sandbox-image PATCH
+prefix = libvirt-sandbox-image PATCH
