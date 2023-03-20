@@ -16,12 +16,8 @@ version 2.1 of the License, or (at your option) any later version.
 Development
 ===========
 
-The master repository for the codebase is
+The repository is hosted at
 
-   https://libvirt.org/git/?p=libvirt-sandbox.git;a=summary
-
-Send patches via email to the libvirt development mailing list
-
-   https://libvirt.org/contact.html
+   https://gitlab.com/libvirt/libvirt-sandbox-image
 
 -- End
